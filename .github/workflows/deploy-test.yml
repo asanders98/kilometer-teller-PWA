@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages (Test)
-run-name: "v0.2.${{ github.run_number }} — ${{ github.event.head_commit.message }}"
+run-name: "v0.3.${{ github.run_number }} — ${{ github.event.head_commit.message }}"
 
 on:
   push:
