@@ -1,6 +1,6 @@
 import { unzipSync, strToU8, zipSync } from 'fflate'
 import type { KmEntry, AppSettings } from '../types'
-import { getDutchMonthName, parseDateKey } from './dateUtils'
+import { getDutchMonthName, capitalize, parseDateKey } from './dateUtils'
 import { calculateKm } from './calculations'
 
 // Maximum data rows in the Excel template (rows 11–39)
@@ -75,8 +75,7 @@ export async function exportMonthToExcel(
 
   let xml = new TextDecoder().decode(files['xl/worksheets/sheet1.xml'])
 
-  const monthName = getDutchMonthName(month)
-  const cap = monthName.charAt(0).toUpperCase() + monthName.slice(1)
+  const cap = capitalize(getDutchMonthName(month))
 
   // Header fields (D1:G1, D2:G2, D3:G3 merged — only set first cell of each merge)
   xml = setCellText(xml, 'D1', settings.werknemer || '')

@@ -7,6 +7,7 @@ import {
   WEEK_DAY_LABELS,
   isSameDay,
   getDutchMonthName,
+  capitalize,
 } from '../../lib/dateUtils'
 import { useKmStore } from '../../store/kmStore'
 import { isEntryComplete, isEntryPartial } from '../../lib/calculations'
@@ -34,13 +35,13 @@ export function WeekStrip({
   const monthLabel = useMemo(() => {
     const first = days[0]!
     const last = days[6]!
-    const m1 = getDutchMonthName(first.getMonth() + 1)
-    const m2 = getDutchMonthName(last.getMonth() + 1)
+    const m1 = capitalize(getDutchMonthName(first.getMonth() + 1))
+    const m2 = capitalize(getDutchMonthName(last.getMonth() + 1))
     const year = last.getFullYear()
     if (first.getMonth() === last.getMonth()) {
-      return `${m1.charAt(0).toUpperCase() + m1.slice(1)} ${year}`
+      return `${m1} ${year}`
     }
-    return `${m1.charAt(0).toUpperCase() + m1.slice(1)} – ${m2.charAt(0).toUpperCase() + m2.slice(1)} ${year}`
+    return `${m1} – ${m2} ${year}`
   }, [days])
 
   return (

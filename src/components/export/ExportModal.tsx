@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useKmStore } from '../../store/kmStore'
 import { exportMonthToExcel } from '../../lib/excelExport'
-import { getDutchMonthName } from '../../lib/dateUtils'
+import { getDutchMonthName, capitalize } from '../../lib/dateUtils'
 import { calculateKm, isEntryComplete } from '../../lib/calculations'
 
 export function ExportModal() {
@@ -10,10 +10,14 @@ export function ExportModal() {
   const [month, setMonth] = useState(now.getMonth() + 1)
   const [exporting, setExporting] = useState(false)
 
-  const getMonthEntries = useKmStore((s) => s.getMonthEntries)
+  const allEntries = useKmStore((s) => s.entries)
   const settings = useKmStore((s) => s.settings)
 
-  const entries = getMonthEntries(year, month)
+  const entries = useMemo(() => {
+    const prefix = `${year}-${String(month).padStart(2, '0')}`
+    return Object.values(allEntries).filter((e) => e.date.startsWith(prefix))
+  }, [allEntries, year, month])
+
   const { completeCount, totalBeroepsmatig } = useMemo(() => ({
     completeCount: entries.filter((e) => isEntryComplete(e.readings)).length,
     totalBeroepsmatig: entries.reduce((sum, e) => {
@@ -40,8 +44,7 @@ export function ExportModal() {
     }
   }
 
-  const monthName = getDutchMonthName(month)
-  const cap = monthName.charAt(0).toUpperCase() + monthName.slice(1)
+  const cap = capitalize(getDutchMonthName(month))
 
   return (
     <div className="flex flex-col gap-6 px-4 py-5 max-w-lg mx-auto">

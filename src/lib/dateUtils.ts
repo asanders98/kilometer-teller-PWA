@@ -45,6 +45,11 @@ export function getDutchMonthName(month: number): string {
   return DUTCH_MONTHS[month - 1]!
 }
 
+/** Uppercase the first character of a string (e.g. month names for display). */
+export function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 export function getWorkdaysForMonth(year: number, month: number): Date[] {
   const workdays: Date[] = []
   const date = new Date(year, month - 1, 1)

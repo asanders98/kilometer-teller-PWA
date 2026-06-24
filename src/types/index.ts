@@ -51,7 +51,6 @@ export interface KmStore {
   upsertEntry: (date: string, readings: Partial<KmReading>) => void
   deleteEntry: (date: string) => void
   getEntry: (date: string) => KmEntry | undefined
-  getMonthEntries: (year: number, month: number) => KmEntry[]
   updateSettings: (settings: Partial<AppSettings>) => void
   setGoogleDriveState: (state: Partial<GoogleDriveState>) => void
   triggerBackup: () => Promise<void>
