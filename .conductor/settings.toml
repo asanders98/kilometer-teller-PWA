@@ -1,0 +1,19 @@
+#:schema https://conductor.build/schemas/settings.repo.schema.json
+
+# Shared Conductor config for Km Teller (Vite + React PWA, npm).
+# See https://www.conductor.build/docs/reference/settings
+
+[scripts]
+# package-lock.json isn't committed, so `npm ci` can't run in a fresh worktree.
+# `npm install` matches what CI uses; a new worktree has no node_modules
+# (gitignored), so it avoids the local "Invalid Version" issue that only
+# triggers when node_modules already exists.
+setup = "npm install"
+
+# Vite dev server. CONDUCTOR_PORT gives each workspace its own port so several
+# can run side by side. `--` forwards the flag through the npm script to vite.
+run = "npm run dev -- --port $CONDUCTOR_PORT"
+
+# Static frontend dev server with no shared local resource (no DB, no fixed
+# port, no Docker stack), so workspaces can run simultaneously.
+run_mode = "concurrent"

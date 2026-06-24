@@ -55,14 +55,6 @@ export const useKmStore = create<KmStore>()(
 
       getEntry: (date) => get().entries[date],
 
-      getMonthEntries: (year, month) => {
-        const entries = get().entries
-        return Object.values(entries).filter((entry) => {
-          const d = new Date(entry.date)
-          return d.getFullYear() === year && d.getMonth() + 1 === month
-        })
-      },
-
       updateSettings: (settings) => {
         set((state) => ({
           settings: { ...state.settings, ...settings },

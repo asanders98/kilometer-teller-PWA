@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'
 import { useKmStore } from '../../store/kmStore'
 import { isEntryComplete, isEntryPartial } from '../../lib/calculations'
-import { formatDateKey, getDutchMonthName, isSameDay } from '../../lib/dateUtils'
+import { formatDateKey, getDutchMonthName, capitalize, isSameDay } from '../../lib/dateUtils'
 import { cn } from '../../lib/utils'
 
 const WEEKDAYS = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo']
@@ -19,7 +19,7 @@ export function MonthGrid({ initialMonth, onDaySelect, onCollapse }: MonthGridPr
   const selectedDate = useKmStore((s) => s.selectedDate)
   const today = new Date()
 
-  const caption = `${getDutchMonthName(month.getMonth() + 1).charAt(0).toUpperCase() + getDutchMonthName(month.getMonth() + 1).slice(1)} ${month.getFullYear()}`
+  const caption = `${capitalize(getDutchMonthName(month.getMonth() + 1))} ${month.getFullYear()}`
 
   // Build calendar grid cells
   const cells = useMemo(() => {
